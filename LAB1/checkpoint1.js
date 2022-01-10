@@ -1,3 +1,4 @@
+//สูตรคูณ
 var i,j;
     for(i = 2; i <= 12 ; i++){
         console.log("%d",i);
