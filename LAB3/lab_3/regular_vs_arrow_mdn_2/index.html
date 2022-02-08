@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <script>
+var obj = {
+  a: 10
+};
+
+Object.defineProperty(obj, 'b', {
+  get: () => {
+    console.log(this.a, typeof this.a, this); // undefined 'undefined' Window {...} (or the global object)
+    return this.a + 10; // represents global object 'Window', therefore 'this.a' returns 'undefined'
+  }
+});
+obj.b
+console.log('--------');
+var obj2 = {
+  a: 10
+};
+
+Object.defineProperty(obj2, 'b', {
+  get: function () {
+    console.log(this.a, typeof this.a, this); 
+    return this.a + 10;
+  }
+});
+obj2.b
+
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>
