@@ -32,12 +32,10 @@ const Todo = () => {
     setidEdit(id)
     let t = tasks.find((task) => +task.id === +id)
     setName(t.name)
-    setAge(t.age)
     if (+idEdit === +id) { //Press Edit again
         let newTasks = tasks.map((task, index) => {
             if (+task.id === +id){
                 tasks[index].name = name
-                tasks[index].age = age
             }
             return task
         })
@@ -82,4 +80,11 @@ const Todo = () => {
     </div>
   );
 };
+
+Todo.getInitialProps = async (ctx) => {
+  const res = await fetch('https://api.github.com/users/nnahttan')
+  const json = await res.json()
+  return { login: json.login, avatar_url: json.avatar_url }
+  }
+
 export default Todo;
