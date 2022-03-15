@@ -1,63 +1,50 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import useSWR, { mutate } from 'swr'
-const URL = `http://localhost/api/bears`
-const fetcher = url => axios.get(url).then(res => res.data)
-const SWR1 = () => {
-    // const [bears, setBears] = useState({})
-    const [bear, setBear] = useState('')
-    const [name, setName] = useState('')
-    const [weight, setWeight] = useState(0)
-    const { data } = useSWR(URL, fetcher)
-    if (!data) return <div>Loading...</div>
-    // console.log(data)
-    const printBears = (bears) => {
-        console.log('Bears:', bears)
-        if (bears && bears.length)
-            return (bears.map((bear, index) =>
-            (<li key={index}>
-                {(bear) ? bear.name : '-'} : {(bear) ? bear.weight : 0}
-                <button onClick={() => deleteBear(bear.id)}> Delete </button>
-                <button onClick={() => getBear(bear.id)}>Get</button>
-                <button onClick={() => updateBear(bear.id)}>Update</button>
-            </li>)
-            ))
-        else {
-            return (<h2>No bears</h2>)
-        }
-    }
-    const getBear = async (id) => {
-        const result = await axios.get(`${URL}/${id}`)
-        console.log('bear id: ', result.data)
-        setBear(result.data)
-    }
-    const addBear = async (name, weight) => {
-        const result = await axios.post(URL, { name, weight })
-        console.log(result.data)
-        mutate(URL)
-    }
-    const deleteBear = async (id) => {
-        const result = await axios.delete(`${URL}/${id}`)
-        console.log(result.data)
-        mutate(URL)
-    }
-    const updateBear = async (id) => {
-        const result = await axios.put(`${URL}/${id}`, {
-            name,
-            weight
-        })
-        console.log('bear id update: ', result.data)
-        mutate(URL)
-    }
-    return (<div>
-        <h1> Bear </h1>
-        <ul>{printBears(data.list)}</ul>
-        selected bear: {bear.name} {bear.weight}
-        <h2>Add bear</h2>
-        Name:<input type="text" onChange={(e) => setName(e.target.value)} /><br />
-        Weight:<input type="number" onChange={(e) => setWeight(e.target.value)} />
-        <br />
-        <button onClick={() => addBear(name, weight)}>Add new bear</button>
-    </div>)
+let express = require('express');
+let bodyParser = require('body-parser');
+let router = express.Router();
+let cors = require('cors');
+let app = express();
+app.use(cors());
+// all of our routes will be prefixed with /api
+app.use('/api', bodyParser.json(), router); //[use json]
+app.use('/api', bodyParser.urlencoded({ extended: false }), router);
+let bears = {
+    list: [
+        { "id": 1, "name": "Winnie", "weight": 50 },
+        { "id": 2, "name": "Pooh", "weight": 66 }]
 }
-export default SWR1
+
+router.route('/bears')
+    .get((req, res) => res.json(bears))
+    .post((req, res) => {
+        console.log(req.body)
+        let newBear = {}
+        newBear.id = (bears.list.length) ? bears.list[bears.list.length - 1].id + 1 : 1
+        newBear.name = req.body.name
+        newBear.weight = req.body.weight
+        bears = { "list": [...bears.list, newBear] }
+        res.json(bears)
+    })
+    .get((req, res) => res.json(bears))
+    
+router.route('/bears/:bear_id')
+    .get((req, res) => {
+        const bear_id = req.params.bear_id
+        const id = bears.list.findIndex(item => +item.id === +bear_id)
+        res.json(bears.list[id])
+    })
+    .put((req, res) => {
+        const bear_id = req.params.bear_id
+        const id = bears.list.findIndex(item => +item.id === +bear_id)
+        bears.list[id].name = req.body.name
+        bears.list[id].weight = req.body.weight
+        res.json(bears.list[id])
+    })
+    .delete((req, res) => {
+        const bear_id = req.params.bear_id
+        console.log('bearId: ', bear_id)
+        bears.list = bears.list.filter(item => +item.id !== +bear_id)
+        res.json(bears.list)
+    })
+
+app.use("*", (req, res) => res.status(404).send('404 Not found'));
+app.listen(80, () => console.log('server is running...'))
