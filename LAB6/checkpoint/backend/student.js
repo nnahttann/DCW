@@ -12,7 +12,7 @@ app.use('/api', bodyParser.urlencoded({ extended: false }), router);
  
 let students = {
    list: [
-       { "id": 6135512060, "name": "NatNon","surname": "Narit","major": "CoE" ,"GPA": 4.00 },]
+       { "id": 6135512060, "name": "NatNon","surname": "Narit","major": "CoE" ,"GPA": "4.00" },]
        
    }
  
