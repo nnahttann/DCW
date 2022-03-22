@@ -28,15 +28,15 @@ router.post('/login', (req, res, next) => {
         console.log('Login: ', req.body, user, err, info)
         if (err) return next(err)
         if (user) {
-            const token = jwt.sign(user, db.SECRET, {
-                expiresIn: req.body.rememberme === true ? '7d' : '1d'
-            })
+            const token = jwt.sign(user, db.SECRET,{
+                expiresIn: (req.body.rememberme )? '7d' : '1d' 
+        })
+            console.log(jwt.decode(token))
             return res.json({ user, token })
         } else
             return res.status(422).json(info)
     })(req, res, next)
 })
-
 /* GET user profile. */
 router.get('/profile',
     passport.authenticate('jwt', { session: false }),
@@ -51,7 +51,6 @@ router.post('/register',
             const { username, email, age } = req.body
             if (db.checkExistingUser(username) !== db.NOT_FOUND)
                 return res.json({ status: "Duplicated user" })
-
             let id = (users.users.length) ? users.users[users.users.length - 1].id + 1 : 1
             const password = await bcrypt.hash(req.body.password, SALT_ROUND)
             users.users.push({ id, username, password, email, age })
