@@ -72,10 +72,10 @@ export default function Home() {
             ))
     }
     return (
-        <div className="bg-[#393E46] ">
+        <div className="bg-[#393E46] w-full max-w-full h-full max-h-full">
             <h1 className=" flex flex-col items-center text-[#00ADB5] text-6xl font-bold italic uppercase font-display">Add Student</h1>
             <div className="flex flex-col text-3xl text-[#00ADB5] font-bold font-display flex flex-col items-center mt-2 ">
-                <div className="relative p-4 ">
+                <div className="flex flex-col w-1/4">
                     Name: <input className="text-2xl text-[#00ADB5]  bg-[#EEEEEE] rounded-lg mx-2 pl-4 font-bold outline-[#00ADB5] font-display" type="text" onChange={(e) => setname(e.target.value)}></input>
                     Surname: <input className="text-xl text-[#00ADB5] bg-[#EEEEEE] rounded-lg mx-2 pl-4 mt-2 mb-2 font-bold outline-[#00ADB5] font-display" type="text" onChange={(e) => setsurname(e.target.value)}></input>
                     Major: <input className="text-xl text-[#00ADB5] bg-[#EEEEEE] rounded-lg  mx-2 pl-4 mt-2 mb-2 font-bold outline-[#00ADB5] font-display" type="text" onChange={(e) => setmajor(e.target.value)}></input>
@@ -85,14 +85,14 @@ export default function Home() {
 
             <h1 className="pl-11 text-[#00ADB5] text-6xl font-bold italic uppercase font-display" >Student</h1>
             <div className="flex flex-col text-3xl text-[#00ADB5] font-bold font-display items-center">
-                <div className="relative m-4 border-double border-8 p-4 flex flex-col">
+                <div className="relative m-4 p-4 flex flex-row-reverse">
                     {printStudents(data.list)}
                 </div>
             </div>
 
             <h1 className="pl-11 text-[#00ADB5] text-6xl font-bold italic uppercase font-display" >Show Student</h1>
             <div className="flex flex-col items-center text-3xl text-[#00ADB5] font-bold font-display">
-                <div className="relative m-4 border-double border-8 p-4 flex flex-colflex-col items-center">
+                <div className="relative m-4 p-4 flex flex-colflex-col items-center">
                     Name: {student.name} <br />
                     Surname: {student.surname} <br />
                     Major: {student.major} <br />
