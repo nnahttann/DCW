@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import Head from 'next/head'
 import Layout from '../components/layout'
-import styles from '../styles/Home.module.css'
 import Navbar from '../components/navbar'
 import axios from 'axios'
 import config from '../config/config'
@@ -38,12 +37,13 @@ export default function Register({ token }) {
     }
 
     const registerForm = () => (
-        <div className={styles.gridContainer}>
+        <div className="flex flex-col text-[#00ADB5]">
             <div>
                 Username:
             </div>
-            <div>
-                <input type="text"
+            <div className="flex flex-col">
+                <input className="text-2xl text-[#00ADB5] bg-[#EEEEEE] rounded-lg mx-2 pl-4 font-bold outline-[#00ADB5]"
+                    type="text"
                     name="username"
                     placeholder="username"
                     onChange={(e) => setUsername(e.target.value)}
@@ -52,8 +52,9 @@ export default function Register({ token }) {
             <div>
                 Email:
             </div>
-            <div>
-                <input type="email"
+            <div className="flex flex-col font-bold">
+                <input className="text-2xl text-[#00ADB5] bg-[#EEEEEE] rounded-lg mx-2 pl-4 font-bold outline-[#00ADB5]" 
+                    type="email"
                     name="email"
                     placeholder="email"
                     onChange={(e) => setEmail(e.target.value)} />
@@ -61,8 +62,9 @@ export default function Register({ token }) {
             <div>
                 Password:
             </div>
-            <div>
-                <input type="password"
+            <div className="flex flex-col ">
+                <input className="text-2xl text-[#00ADB5] bg-[#EEEEEE] rounded-lg mx-2 pl-4 font-bold outline-[#00ADB5]"
+                    type="password"
                     name="password"
                     placeholder="password"
                     onChange={(e) => setPassword(e.target.value)} />
@@ -77,11 +79,15 @@ export default function Register({ token }) {
             <Head>
                 <title>Register</title>
             </Head>
-            <div className={styles.container}>
+            <div className="flex flex-col justify-start items-center h-screen w-screen bg-[#393E46]">
+                <div className="text-[#EEEEEE] text-2xl font-bold w3/4 uppercase">
                 <Navbar />
-                <h1>Register</h1>
-                <div><b>Token:</b> {token.substring(0, 15)}...
-                <button
+                <div/>
+                <div/>
+                
+                <h1 className=" text-[#00ADB5] text-6xl flex flex-col items-center" >Register</h1>
+                <div className="text-xl text-[#EEEEEE]"><b>Token:</b> {token.substring(0, 25)}...
+                <button className="flex flex-col items-center w-1/4 text-xl bg-[#00ADB5] font-bold text-[#222831] rounded-lg "
                         onClick={() => { navigator.clipboard.writeText(token) }}>
                         Copy token
                 </button>
@@ -89,14 +95,15 @@ export default function Register({ token }) {
                 <br />
             Status:  {status}
                 <br /><br />
-                <div className={styles.content}>
+                <div>
                     {registerForm()}
                 </div>
-
-                <div>
-                    <button onClick={register}>Register</button>
+                <div className="flex flex-col items-center"><br/>
+                    <button className="flex flex-col items-center w-1/4  text-2xl bg-[#00ADB5] font-bold text-[#222831] hover:text-[#00ADB5] dark:md:hover:bg-[#222831] rounded-lg uppercase" onClick={register}>Register</button>
                 </div>
             </div>
+            </div>
+            
         </Layout>
     )
 }

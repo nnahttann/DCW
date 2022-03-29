@@ -9,6 +9,9 @@ const GetConfig = () => {
         <Head>
             <title>Get Config</title>
         </Head>
+        <div>
+            
+        </div>
         <div className={styles.container}>
             <Navbar />
             <h2> Get Configuration from ../config/config.js </h2>

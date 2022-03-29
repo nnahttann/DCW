@@ -11,6 +11,12 @@ const bcrypt = require('bcrypt')
 const db = require('./database.js')
 let users = db.users
 
+let students = {
+    list:
+        [
+            { id: "6135512060", name: 'Natthanon', surname: 'Narit', major: "CoE", GPA: 4.00 },
+        ]
+}
 require('./passport.js')
 
 const router = require('express').Router(),
@@ -18,10 +24,63 @@ const router = require('express').Router(),
 
 app.use('/api', router)
 router.use(cors({ origin: 'http://localhost:3000', credentials: true }))
-// router.use(cors())
 router.use(express.json())
 router.use(express.urlencoded({ extended: false }))
 
+router.route('/students')
+    .get((req, res) => res.json(students))
+    .post((req, res) => {
+        console.log(req.body)
+       
+        let newStudent = {}
+        newStudent.id = (students.list.length) ? students.list[students.list.length - 1].id + 1 : 1
+        newStudent.name = req.body.name
+        newStudent.surname = req.body.surname
+        newStudent.major = req.body.major
+        newStudent.GPA = req.body.GPA
+        students = { list: [...students.list, newStudent] }
+        res.json(students)
+    })
+
+router.route('/students/:student_id') //params
+    .get((req, res) => {
+        let id = students.list.findIndex((item) => (+item.id === +req.params.student_id))
+
+        if (id === -1) {
+            res.send('Not Found')
+        }
+        else {
+            res.json(students.list[id])
+        }
+
+
+    })
+    .put((req, res) => {
+        let id = students.list.findIndex((item) => (+item.id === +req.params.student_id))
+        if (id === -1) {
+            res.send('Not Found')
+        }
+        else {
+            students.list[id].name = req.body.name
+            students.list[id].surname = req.body.surname
+            students.list[id].major = req.body.major
+            students.list[id].GPA = req.body.GPA
+            res.json(students)
+        }
+
+
+    })
+    .delete((req, res) => {
+
+        let id = students.list.findIndex((item) => (+item.id === +req.params.student_id))
+        if (id === -1) {
+            res.send('Not Found')
+        }
+        else {
+            students.list = students.list.filter((item) => +item.id !== +req.params.student_id)
+            res.json(students)
+        }
+    })
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
@@ -29,7 +88,7 @@ router.post('/login', (req, res, next) => {
         if (err) return next(err)
         if (user) {
             const token = jwt.sign(user, db.SECRET, {
-                expiresIn: '1d'
+                expiresIn: (req.body.rememberme === "on") ? '7d' : '1d'
             })
             // req.cookie.token = token
             res.setHeader(
@@ -49,7 +108,7 @@ router.post('/login', (req, res, next) => {
     })(req, res, next)
 })
 
-router.get('/logout', (req, res) => { 
+router.get('/logout', (req, res) => {
     res.setHeader(
         "Set-Cookie",
         cookie.serialize("token", '', {
@@ -70,22 +129,20 @@ router.get('/profile',
     (req, res, next) => {
         res.send(req.user)
     });
-/* GET user foo. */
-router.get(
-    "/foo",
-    passport.authenticate("jwt", { session: false }),
+
+router.get('/foo',
+    passport.authenticate('jwt', { session: false }),
     (req, res, next) => {
-        res.status(200).json({ message: "Foo" });
-    }
-  );
-  
+        return res.json({ message: "Foo" })
+    });
+
 router.post('/register',
     async (req, res) => {
         try {
             const SALT_ROUND = 10
-            const { username, email, password } = req.body 
+            const { username, email, password } = req.body
             if (!username || !email || !password)
-                return res.json( {message: "Cannot register with empty string"})
+                return res.json({ message: "Cannot register with empty string" })
             if (db.checkExistingUser(username) !== db.NOT_FOUND)
                 return res.json({ message: "Duplicated user" })
 
@@ -98,11 +155,12 @@ router.post('/register',
         }
     })
 
-router.get('/alluser', (req,res) => res.json(db.users.users))
+router.get('/alluser', (req, res) => res.json(db.users.users))
 
 router.get('/', (req, res, next) => {
     res.send('Respond without authentication');
 });
+
 
 // Error Handler
 app.use((err, req, res, next) => {
