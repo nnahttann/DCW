@@ -31,10 +31,11 @@ const Foo1 = ({ token }) => {
     }
  
     return (
-            <div className={styles.container}>
-                <Navbar />
-                <h1>User foo</h1>
-                <div>
+        <div className="flex flex-col justify-start w3/4 items-center h-screen w-screen bg-[#393E46] text-[#EEEEEE] text-2xl font-bold w3/4 uppercase">
+        <br />
+        <Navbar /><br />
+                <h1 className=" text-[#00ADB5] text-6xl flex flex-col items-center">User foo</h1>
+                <div className=" text-[#EEEEEE] text-2xl flex flex-col items-center">
                     <b>Token:</b> {token.substring(0, 15)}... <br /><br />
                     This route is protected by token, user is required to login first.
                     <br/>

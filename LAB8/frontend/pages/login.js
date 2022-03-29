@@ -75,8 +75,7 @@ export default function Login({ token }) {
                 <div className="text-[#EEEEEE] text-2xl font-bold w3/4 uppercase">
                 <br />
                 <Navbar /><br />
-                <div/>
-                <div/>
+        
                 <h1 className=" text-[#00ADB5] text-6xl flex flex-col items-center">Login</h1>
                 <div className="text-xl text-[#EEEEEE]">
                     <b>Token:</b> {token.substring(0, 15)}...
