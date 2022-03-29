@@ -2,7 +2,6 @@ import Head from "next/head";
 import Layout from "../components/layout";
 import { useState } from "react";
 import Navbar from "../components/navbar";
-import styles from "../styles/Home.module.css";
 import axios from "axios";
 import config from "../config/config";
 
@@ -24,15 +23,15 @@ export default function Login({ token }) {
             setStatus(JSON.stringify(e.response).substring(0, 80) + "...");
         }
     };
-    const reMem = async () => {
+    const rememberme = async () => {
         setRemember(!remember);
     };
 
     const loginForm = () => (
-        <div className={styles.gridContainer}>
+        <div className="flex flex-col text-[#00ADB5]">
             <div><b>Username:</b></div>
-            <div>
-                <input
+            <div className="flex flex-col">
+                <input className="text-2xl text-[#00ADB5] bg-[#EEEEEE] rounded-lg mx-2 pl-4 font-bold outline-[#00ADB5]"
                     type="text"
                     name="username"
                     placeholder="username"
@@ -40,25 +39,26 @@ export default function Login({ token }) {
                 />
             </div>
             <div ><b>Password:</b></div>
-            <div>
-                <input
+            <div className="flex flex-col">
+                <input className="text-2xl text-[#00ADB5] bg-[#EEEEEE] rounded-lg mx-2 pl-4 font-bold outline-[#00ADB5]"
                     type="password"
                     name="password"
                     placeholder="password"
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-            <div className="flex items-center">
+            <div className="text-2xl text-[#00ADB5]">
                 <input
                     id="remember_me"
                     name="remember_me"
                     type="checkbox"
-                    onClick={reMem}
+                    onClick={rememberme}
                 />
-
+                    <label>Remember Me</label>
             </div>
-            <div className={styles.text}><label><ins><i><b>Remember Me</b></i></ins></label></div>
+
         </div>
+        
     );
 
     const copyText = () => {
@@ -71,20 +71,23 @@ export default function Login({ token }) {
             <Head>
                 <title>Login Page</title>
             </Head>
-            <div>  
-            <div className={styles.container}>
-                <Navbar />
-                <h1>Login</h1>
-                <div>
+            <div className="flex flex-col justify-start items-center h-screen w-screen bg-[#393E46]">
+                <div className="text-[#EEEEEE] text-2xl font-bold w3/4 uppercase">
+                <br />
+                <Navbar /><br />
+                <div/>
+                <div/>
+                <h1 className=" text-[#00ADB5] text-6xl flex flex-col items-center">Login</h1>
+                <div className="text-xl text-[#EEEEEE]">
                     <b>Token:</b> {token.substring(0, 15)}...
-                    <button className={styles.btn1} onClick={copyText}> Copy token </button>
+                    <button className="flex flex-col items-center w-1/4 text-xl bg-[#00ADB5] font-bold text-[#222831] rounded-lg " onClick={copyText}> Copy token </button>
                 </div>
                 <br />
-                <div>Status: {status}</div>
+                <div className="flex flex-row w-3/4 text-xs" >Status: {status}</div>
                 <br />
                 {loginForm()}
-                <div>
-                    <button className={styles.btn2} onClick={login}>Login</button>
+                <div className="flex flex-col items-center">
+                    <button className="flex flex-col items-center w-1/4  text-2xl bg-[#00ADB5] font-bold text-[#222831] hover:text-[#00ADB5] dark:md:hover:bg-[#222831] rounded-lg uppercase" onClick={login}>Login</button>
                 </div>
             </div>
             </div>

@@ -79,22 +79,23 @@ export default function Register({ token }) {
             <Head>
                 <title>Register</title>
             </Head>
-            <div className="flex flex-col justify-start items-center h-screen w-screen bg-[#393E46]">
+            <div className="flex flex-col justify-start w3/4 items-center h-screen w-screen bg-[#393E46]">
                 <div className="text-[#EEEEEE] text-2xl font-bold w3/4 uppercase">
-                <Navbar />
+                <br />
+                <Navbar /><br />
                 <div/>
                 <div/>
                 
                 <h1 className=" text-[#00ADB5] text-6xl flex flex-col items-center" >Register</h1>
-                <div className="text-xl text-[#EEEEEE]"><b>Token:</b> {token.substring(0, 25)}...
+                <div className="text-xl text-[#EEEEEE]"><b>Token:</b> {token.substring(0, 15)}...
                 <button className="flex flex-col items-center w-1/4 text-xl bg-[#00ADB5] font-bold text-[#222831] rounded-lg "
                         onClick={() => { navigator.clipboard.writeText(token) }}>
                         Copy token
                 </button>
                 </div>
                 <br />
-            Status:  {status}
-                <br /><br />
+                <div className="flex flex-row w-3/4 text-xs" >Status: {status}</div>
+                <br />
                 <div>
                     {registerForm()}
                 </div>
