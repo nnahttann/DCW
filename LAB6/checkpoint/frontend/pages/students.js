@@ -52,7 +52,6 @@ export default function Home() {
         if (students && students.length)
             return (students.map((item, index) =>
             (
-
                 <li key={index}>
                     <div >
                         Id: {item.id} <br />
@@ -92,7 +91,7 @@ export default function Home() {
 
             <h1 className="pl-11 text-[#00ADB5] text-6xl font-bold italic uppercase font-display" >Show Student</h1>
             <div className="flex flex-col items-center text-3xl text-[#00ADB5] font-bold font-display">
-                <div className="relative m-4 p-4 flex flex-colflex-col items-center">
+                <div className="relative m-4 p-4 flex flex-col items-center">
                     Name: {student.name} <br />
                     Surname: {student.surname} <br />
                     Major: {student.major} <br />
