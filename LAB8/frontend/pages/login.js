@@ -28,7 +28,7 @@ export default function Login({ token }) {
     };
 
     const loginForm = () => (
-        <div className="flex flex-col text-[#00ADB5]">
+        <div className="flex flex-col text-[#EEE]">
             <div><b>Username:</b></div>
             <div className="flex flex-col">
                 <input className="text-2xl text-[#00ADB5] bg-[#EEEEEE] rounded-lg mx-2 pl-4 font-bold outline-[#00ADB5]"
@@ -46,8 +46,8 @@ export default function Login({ token }) {
                     placeholder="password"
                     onChange={(e) => setPassword(e.target.value)}
                 />
-            </div>
-            <div className="text-2xl text-[#00ADB5]">
+            </div><br/>
+            <div className="text-2xl text-[#EEE]">
                 <input
                     id="remember_me"
                     name="remember_me"

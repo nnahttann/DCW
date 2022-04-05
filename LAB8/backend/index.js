@@ -14,7 +14,7 @@ let users = db.users
 let students = {
     list:
         [
-            { id: "6135512060", name: 'Natthanon', surname: 'Narit', major: "CoE", GPA: 4.00 },
+            { id: "6135512060", name: 'Natthanon', surname: 'Narit', major: "CoE", GPA: 3.50 },
         ]
 }
 require('./passport.js')
@@ -31,7 +31,6 @@ router.route('/students')
     .get((req, res) => res.json(students))
     .post((req, res) => {
         console.log(req.body)
-       
         let newStudent = {}
         newStudent.id = (students.list.length) ? students.list[students.list.length - 1].id + 1 : 1
         newStudent.name = req.body.name

@@ -37,7 +37,7 @@ export default function Register({ token }) {
     }
 
     const registerForm = () => (
-        <div className="flex flex-col text-[#00ADB5]">
+        <div className="flex flex-col text-[#EEE]">
             <div>
                 Username:
             </div>
